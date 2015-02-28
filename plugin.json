@@ -1,0 +1,57 @@
+{
+    "description": "Metric collector for SOLR",
+    "command": "python -u plugin.py",
+    "postExtract" : "",
+    "icon" : "icon.png",
+    "core_name": "collection1",
+    "metrics" : [
+        "SOLR_RUN_MODE",
+        "SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE",
+        "SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE",
+        "SOLR_SYSTEM_PROCESS_CPU_TIME",
+        "SOLR_SYSTEM_OPEN_FILE_DESCRIPTOR_COUNT",
+        "SOLR_SYSTEM_MAX_FILE_DESCRIPTOR_COUNT",
+        "SOLR_JVM_UPTIME",
+        "SOLR_JVM_PROCESSORS",
+        "SOLR_JVM_MEMORY_FREE",
+        "SOLR_JVM_MEMORY_TOTAL",
+        "SOLR_JVM_MEMORY_MAX",
+        "SOLR_JVM_MEMORY_USED",
+        "SOLR_THREAD_CURRENT",
+        "SOLR_THREAD_PEAK",
+        "SOLR_THREAD_DAEMON",
+        "SOLR_CACHE_DOCUMENT_LOOKUPS",
+        "SOLR_CACHE_DOCUMENT_HITS",
+        "SOLR_CACHE_DOCUMENT_HITRATIO",
+        "SOLR_CACHE_DOCUMENT_INSERTS",
+        "SOLR_CACHE_DOCUMENT_SIZE",
+        "SOLR_CACHE_DOCUMENT_EVICTIONS",
+        "SOLR_CACHE_DOCUMENT_WARMUPTIME"
+    ],
+
+    "dashboards" : [
+        {
+            "name" : "Solr",
+            "layout" : "d-w=4&d-h=4&d-pad=5&d-bg=none&d-g-SOLR_RUN_MODE=0-0-1-1&d-g-SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE=1-0-1-1&d-g-SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE=0-1-1-1&d-g-SOLR_SYSTEM_PROCESS_CPU_TIME=0-2-1-1&d-g-SOLR_SYSTEM_OPEN_FILE_DESCRIPTOR_COUNT=1-1-1-1&d-g-SOLR_SYSTEM_MAX_FILE_DESCRIPTOR_COUNT=1-2-1-1&d-g-SOLR_JVM_UPTIME=2-2-1-1&d-g-SOLR_JVM_PROCESSORS=0-3-1-1&d-g-SOLR_JVM_MEMORY_FREE=1-3-1-1&d-g-SOLR_JVM_MEMORY_TOTAL=2-3-1-1&d-g-SOLR_JVM_MEMORY_MAX=2-0-1-1&d-g-SOLR_JVM_MEMORY_USED=2-1-1-1&d-g-SOLR_THREAD_CURRENT=3-0-1-1&d-g-SOLR_THREAD_PEAK=3-2-1-1&d-g-SOLR_THREAD_DAEMON=3-3-1-1"
+        }
+    ],
+
+    "paramSchema": [
+        {
+            "title": "Poll Time (ms)",
+            "name": "pollInterval",
+            "description": "The Poll Interval to call the command. Defaults 5 seconds",
+            "type": "integer",
+            "default": 5000
+            "required": true
+        },
+        {
+            "title": "Solr Stats URL",
+            "name": "stats_url",
+            "description": "The URL to Solr's stats API endpoint",
+            "type": "string",
+            "default": "http://localhost:8983/solr/admin",
+            "required": true
+        }
+    ]
+}
