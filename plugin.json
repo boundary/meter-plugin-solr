@@ -3,7 +3,6 @@
     "command": "python -u plugin.py",
     "postExtract" : "",
     "icon" : "icon.png",
-    "core_name": "collection1",
     "metrics" : [
         "SOLR_RUN_MODE",
         "SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE",
@@ -44,6 +43,27 @@
             "type": "integer",
             "default": 5000
             "required": true
+        },
+        {
+            "title": "SOLR Plugin Log File",
+            "name": "log_file",
+            "description": "The log file to capture logging information from the plugin",
+            "type": "string",
+            "required": false
+        },
+        {
+            "title": "SOLR Plugin Report Log File",
+            "name": "report_log_file",
+            "description": "The log file to capture reporting information from the plugin",
+            "type": "string",
+            "required": false
+        },
+        {
+            "title": "SOLR Core to Monitor",
+            "name": "core_name",
+            "description": "The SOLR core collection which is to be monitored by the plugin.",
+            "type": "string",
+            "required": false
         },
         {
             "title": "Solr Stats URL",
