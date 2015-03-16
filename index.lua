@@ -15,9 +15,9 @@ local core         = nil
 local pollInterval = 1000
 
 
-SYSTEM_ENDPOINT='admin/info/system?wt=json'
-THREAD_ENDPOINT='admin/info/threads?wt=json'
-MBEANS_ENDPOINT='admin/mbeans?stats=true&wt=json&json.nl=map'
+SYSTEM_ENDPOINT = 'admin/info/system?wt=json'
+THREAD_ENDPOINT = 'admin/info/threads?wt=json'
+MBEANS_ENDPOINT = 'admin/mbeans?stats=true&wt=json&json.nl=map'
 
 
 SYSTEM_KEY_MAPPING = {
@@ -100,18 +100,11 @@ local doreq = function(url, cb)
 end
 
 
-function parse(str)
-  return tonumber(str)
-end
-
 function diff(a, b)
     if a == nil or b == nil then return 0 end
     return math.max(a - b, 0)
 end
 
-function parseStatsText(body)
-
-end
 
 -- accumulate a value and return the difference from the previous value
 function accumulate(key, newValue)
@@ -126,7 +119,6 @@ function diff(a, b)
   if not a or not b then return 0 end
   return math.max(a - b, 0)
 end
-
 
 
 function getData(endpoint, mapping)
