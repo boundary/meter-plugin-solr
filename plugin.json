@@ -2,7 +2,10 @@
     "description": "Metric collector for SOLR",
     "command": "python -u plugin.py",
     "postExtract" : "",
+    "command_lua": "boundary-meter init.lua",
+    "postExtract_lua" : "",
     "icon" : "icon.png",
+
     "metrics" : [
         "SOLR_RUN_MODE",
         "SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE",

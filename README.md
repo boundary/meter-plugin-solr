@@ -2,22 +2,38 @@ Boundary SOLR Plugin
 -----------------------------
 Collects metrics from SOLR server.
 
-### Platforms
+## Prerequisites
+
+### Supported OS
 
 |     OS    | Linux | Windows | SmartOS | OS X |
 |:----------|:-----:|:-------:|:-------:|:----:|
 | Supported |   v   |         |         |      |
 
-### Prerequisites
+#### SOLR 4+
+
+#### For Boundary Meter Versions V4.0 Or Greater
+
+To get the new meter:
+
+    curl -fsS \
+        -d "{\"token\":\"<your API token here>\"}" \
+        -H "Content-Type: application/json" \
+        "https://meter.boundary.com/setup_meter" > setup_meter.sh
+    chmod +x setup_meter.sh
+    ./setup_meter.sh
+
+#### For Boundary Meter less than V4.0
 
 |  Runtime | node.js | Python | Java |
 |:---------|:-------:|:------:|:----:|
 | Required |         |    v   |      |
 
 - Python 2.6 or later
-- SOLR 4+
 
-### Plugin Configuration
+### Plugin Configuration Fields
+
+#### For All Versions
 
 In order for the plugin to collect statistics from SOLR server, it needs access to the cluster stats API endpoint.
 
@@ -29,7 +45,9 @@ In order for the plugin to collect statistics from SOLR server, it needs access 
 
 ### Metrics Collected
 
-|Metric Name                  |Description                                                              |
+#### For All Versions
+
+|Metric Name                             |Description                                                                           |
 |:---------------------------------------|:-------------------------------------------------------------------------------------|
 |SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE|Total commited memory on the system reported by SOLR service                          |
 |SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE   |Amount of free memory on the system reported by SOLR service                          |
