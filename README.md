@@ -1,5 +1,4 @@
-Boundary SOLR Plugin
------------------------------
+# Boundary SOLR Plugin
 Collects metrics from SOLR server.
 
 ## Prerequisites
@@ -30,6 +29,10 @@ To get the new meter:
 | Required |         |    v   |      |
 
 - Python 2.6 or later
+
+### Plugin Setup
+
+None
 
 ### Plugin Configuration Fields
 
