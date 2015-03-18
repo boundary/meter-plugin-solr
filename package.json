@@ -1,0 +1,10 @@
+{
+  "name": "boundary-solr-plugin",
+  "version": "0.0.1",
+  "private": false,
+  "description": "Solr plugin for boundary",
+  "main": "index.js",
+  "dependencies": {
+    "luvit-base64": "^0.1.1"
+  }
+}
