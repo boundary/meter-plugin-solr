@@ -1,214 +1,170 @@
 {
-    "result" : [
-        {
-            "name": "SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE",
-            "displayName": "System commited memory size reported by SOLR",
-            "description": "Total commited memory on the system reported by SOLR service.",
-            "unit": "bytecount",
-            "displayNameShort": "SR Sys RAM Comm",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE",
-            "displayName": "System free memory reported by SOLR",
-            "description": "Amount of free memory on the system reported by SOLR service.",
-            "unit": "bytecount",
-            "displayNameShort": "SR Sys RAM Free",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_SYSTEM_PROCESS_CPU_TIME",
-            "displayName": "System CPU time for for SOLR",
-            "description": "CPU time on the system used by SOLR",
-            "unit": "int",
-            "displayNameShort": "SR Sys CPU Time",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_SYSTEM_OPEN_FILE_DESCRIPTOR_COUNT",
-            "displayName": "System open file descriptor",
-            "description": "Total amount of file descriptors open in the system.",
-            "unit": "int",
-            "displayNameShort": "SR Sys Open FDesc",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_SYSTEM_MAX_FILE_DESCRIPTOR_COUNT",
-            "displayName": "System maximum file descriptor",
-            "description": "Total amount of allowed file descriptors in the system.",
-            "unit": "int",
-            "displayNameShort": "SR Sys Max FDesc",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_JVM_UPTIME",
-            "displayName": "JVM uptime for SOLR",
-            "description": "Uptime of JVM used to serve the SOLR service.",
-            "unit": "int",
-            "displayNameShort": "SR JVM Uptime",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_JVM_PROCESSORS",
-            "displayName": "Processors used by SOLR",
-            "description": "Number of processors used by SOLR.",
-            "unit": "int",
-            "displayNameShort": "SR Proc Used",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_JVM_MEMORY_FREE",
-            "displayName": "Free memory in JVM stack",
-            "description": "Amount of free memory in the JVM stack used by SOLR.",
-            "unit": "bytecount",
-            "displayNameShort": "SR JVM Free RAM",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_JVM_MEMORY_TOTAL",
-            "displayName": "Total allocated JVM Memory size",
-            "description": "The total amount of allocated JVM memory size.",
-            "unit": "bytecount",
-            "displayNameShort": "SR JVM Total RAM",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_JVM_MEMORY_MAX",
-            "displayName": "Maximum memory used since startup",
-            "description": "Total amount of JVM memory used by SOLR since the last startup.",
-            "unit": "bytecount",
-            "displayNameShort": "SR JVM Used MAX",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_JVM_MEMORY_USED",
-            "displayName": "Currently used JVM memory",
-            "description": "Total amount of JVM memory currently in use.",
-            "unit": "bytecount",
-            "displayNameShort": "SR JVM in Use",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_THREAD_CURRENT",
-            "displayName": "Current number of threads running",
-            "description": "Number of threads running to serv requests arriving to SOLR.",
-            "unit": "int",
-            "displayNameShort": "SR Thread Used",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_THREAD_PEAK",
-            "displayName": "Maximum running threads since startup",
-            "description": "The maximum number of threads in running state since the last startup.",
-            "unit": "int",
-            "displayNameShort": "SR Thread Peak",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_THREAD_DAEMON",
-            "displayName": "Threads used by daemon",
-            "description": "The number of running threads used by the SOLR daemon.",
-            "unit": "int",
-            "displayNameShort": "SR Thread Daemon",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_CACHE_DOCUMENT_LOOKUPS",
-            "displayName": "Amount of document cache lookups",
-            "description": "Total amount of lookups in the document cache.",
-            "unit": "int",
-            "displayNameShort": "SR DOC Cache LU",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_CACHE_DOCUMENT_HITS",
-            "displayName": "Amount of document cache hits",
-            "description": "Total amount of document cache hits (Number of requests where the doc. cache was used).",
-            "unit": "int",
-            "displayNameShort": "SR DOC Cache Hit",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_CACHE_DOCUMENT_HITRATIO",
-            "displayName": "Percent of hits in document cache",
-            "description": "The percentage of hits in the document cache.",
-            "unit": "percent",
-            "displayNameShort": "SR DOC Cache HRatio",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_CACHE_DOCUMENT_INSERTS",
-            "displayName": "Amount of inserts in cache",
-            "description": "Total amount of inserts in the document cache.",
-            "unit": "int",
-            "displayNameShort": "SR DOC Cache IS",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_CACHE_DOCUMENT_SIZE",
-            "displayName": "Document Cache Size",
-            "description": "The size of the document cache.",
-            "unit": "int",
-            "displayNameShort": "SR DOC Cache Size",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_CACHE_DOCUMENT_EVICTIONS",
-            "displayName": "Document cache evictions",
-            "description": "Total amount of evictions in the document cache.",
-            "unit": "int",
-            "displayNameShort": "SR DOC Cache Evic",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "SOLR_CACHE_DOCUMENT_WARMUPTIME",
-            "displayName": "Warmup time of the document cache",
-            "description": "The time needed (seconds) to warm up the document cache.",
-            "unit": "int",
-            "displayNameShort": "SR DOC Cache WUP",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        }
-    ]
+  "SOLR_CACHE_DOCUMENT_EVICTIONS": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Total amount of evictions in the document cache.",
+    "displayName": "Document cache evictions",
+    "displayNameShort": "SR DOC Cache Evic",
+    "unit": "int"
+  },
+  "SOLR_CACHE_DOCUMENT_HITRATIO": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "The percentage of hits in the document cache.",
+    "displayName": "Percent of hits in document cache",
+    "displayNameShort": "SR DOC Cache HRatio",
+    "unit": "percent"
+  },
+  "SOLR_CACHE_DOCUMENT_HITS": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Total amount of document cache hits (Number of requests where the doc. cache was used).",
+    "displayName": "Amount of document cache hits",
+    "displayNameShort": "SR DOC Cache Hit",
+    "unit": "int"
+  },
+  "SOLR_CACHE_DOCUMENT_INSERTS": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Total amount of inserts in the document cache.",
+    "displayName": "Amount of inserts in cache",
+    "displayNameShort": "SR DOC Cache IS",
+    "unit": "int"
+  },
+  "SOLR_CACHE_DOCUMENT_LOOKUPS": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Total amount of lookups in the document cache.",
+    "displayName": "Amount of document cache lookups",
+    "displayNameShort": "SR DOC Cache LU",
+    "unit": "int"
+  },
+  "SOLR_CACHE_DOCUMENT_SIZE": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "The size of the document cache.",
+    "displayName": "Document Cache Size",
+    "displayNameShort": "SR DOC Cache Size",
+    "unit": "int"
+  },
+  "SOLR_CACHE_DOCUMENT_WARMUPTIME": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "The time needed (seconds) to warm up the document cache.",
+    "displayName": "Warmup time of the document cache",
+    "displayNameShort": "SR DOC Cache WUP",
+    "unit": "int"
+  },
+  "SOLR_JVM_MEMORY_FREE": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Amount of free memory in the JVM stack used by SOLR.",
+    "displayName": "Free memory in JVM stack",
+    "displayNameShort": "SR JVM Free RAM",
+    "unit": "bytecount"
+  },
+  "SOLR_JVM_MEMORY_MAX": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Total amount of JVM memory used by SOLR since the last startup.",
+    "displayName": "Maximum memory used since startup",
+    "displayNameShort": "SR JVM Used MAX",
+    "unit": "bytecount"
+  },
+  "SOLR_JVM_MEMORY_TOTAL": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "The total amount of allocated JVM memory size.",
+    "displayName": "Total allocated JVM Memory size",
+    "displayNameShort": "SR JVM Total RAM",
+    "unit": "bytecount"
+  },
+  "SOLR_JVM_MEMORY_USED": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Total amount of JVM memory currently in use.",
+    "displayName": "Currently used JVM memory",
+    "displayNameShort": "SR JVM in Use",
+    "unit": "bytecount"
+  },
+  "SOLR_JVM_PROCESSORS": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Number of processors used by SOLR.",
+    "displayName": "Processors used by SOLR",
+    "displayNameShort": "SR Proc Used",
+    "unit": "int"
+  },
+  "SOLR_JVM_UPTIME": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Uptime of JVM used to serve the SOLR service.",
+    "displayName": "JVM uptime for SOLR",
+    "displayNameShort": "SR JVM Uptime",
+    "unit": "int"
+  },
+  "SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Total commited memory on the system reported by SOLR service.",
+    "displayName": "System commited memory size reported by SOLR",
+    "displayNameShort": "SR Sys RAM Comm",
+    "unit": "bytecount"
+  },
+  "SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Amount of free memory on the system reported by SOLR service.",
+    "displayName": "System free memory reported by SOLR",
+    "displayNameShort": "SR Sys RAM Free",
+    "unit": "bytecount"
+  },
+  "SOLR_SYSTEM_MAX_FILE_DESCRIPTOR_COUNT": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Total amount of allowed file descriptors in the system.",
+    "displayName": "System maximum file descriptor",
+    "displayNameShort": "SR Sys Max FDesc",
+    "unit": "int"
+  },
+  "SOLR_SYSTEM_OPEN_FILE_DESCRIPTOR_COUNT": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Total amount of file descriptors open in the system.",
+    "displayName": "System open file descriptor",
+    "displayNameShort": "SR Sys Open FDesc",
+    "unit": "int"
+  },
+  "SOLR_SYSTEM_PROCESS_CPU_TIME": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "CPU time on the system used by SOLR",
+    "displayName": "System CPU time for for SOLR",
+    "displayNameShort": "SR Sys CPU Time",
+    "unit": "int"
+  },
+  "SOLR_THREAD_CURRENT": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "Number of threads running to serv requests arriving to SOLR.",
+    "displayName": "Current number of threads running",
+    "displayNameShort": "SR Thread Used",
+    "unit": "int"
+  },
+  "SOLR_THREAD_DAEMON": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "The number of running threads used by the SOLR daemon.",
+    "displayName": "Threads used by daemon",
+    "displayNameShort": "SR Thread Daemon",
+    "unit": "int"
+  },
+  "SOLR_THREAD_PEAK": {
+    "defaultAggregate": "avg",
+    "defaultResolutionMS": 1000,
+    "description": "The maximum number of threads in running state since the last startup.",
+    "displayName": "Maximum running threads since startup",
+    "displayNameShort": "SR Thread Peak",
+    "unit": "int"
+  }
 }
