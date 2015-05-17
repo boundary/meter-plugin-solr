@@ -1,5 +1,5 @@
 {
-    "stats_url" : "http://localhost:8983/solr/admin",
-    "core_name": "collection1",
+    "url" : "http://www.ammazing.de:8983/solr",
+    "core_name": "products",
     "pollInterval" : 5000
 }
