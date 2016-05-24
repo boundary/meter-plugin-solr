@@ -5,7 +5,7 @@ local https    = require('https')
 local boundary = require('boundary')
 local io       = require('io')
 local _url     = require('_url')
-local base64   = require('luvit-base64')
+--local base64   = require('luvit-base64')
 
 
 local __pgk        = "BOUNDARY SOLR"
