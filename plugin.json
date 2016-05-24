@@ -44,7 +44,7 @@
             "name": "pollInterval",
             "description": "The Poll Interval to call the command. Defaults 5 seconds",
             "type": "integer",
-            "default": 5000
+            "default": 5000,
             "required": true
         },
         {
