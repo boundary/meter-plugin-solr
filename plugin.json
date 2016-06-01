@@ -1,6 +1,6 @@
 {
     "description": "Metric collector for SOLR",
-    "command": "python -u plugin.py",
+    "command": "boundary-meter init.lua",
     "postExtract" : "",
     "command_lua": "boundary-meter init.lua",
     "postExtract_lua" : "",
