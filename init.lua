@@ -5,23 +5,20 @@ local https    = require('https')
 local boundary = require('boundary')
 local io       = require('io')
 local _url     = require('_url')
---local base64   = require('luvit-base64')
-
 
 local __pgk        = "BOUNDARY SOLR"
 local _previous    = {}
-local url          = "http://localhost:8983/solr/"
+local url          = "http://localhost:8983/solr"
 local core         = nil
 local pollInterval = 1000
 
 
-SYSTEM_ENDPOINT = 'admin/info/system?wt=json'
-THREAD_ENDPOINT = 'admin/info/threads?wt=json'
-MBEANS_ENDPOINT = 'admin/mbeans?stats=true&wt=json&json.nl=map'
+SYSTEM_ENDPOINT = '/admin/info/system?wt=json'
+THREAD_ENDPOINT = '/admin/info/threads?wt=json'
+MBEANS_ENDPOINT = '/admin/mbeans?stats=true&wt=json&json.nl=map'
 
 
 SYSTEM_KEY_MAPPING = {
-    {{"mode"}, "SOLR_RUN_MODE", false},
     {{"system", "committedVirtualMemorySize"}, "SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE", false},
     {{"system", "freePhysicalMemorySize"}, "SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE", false},
     {{"system", "processCpuTime"}, "SOLR_SYSTEM_PROCESS_CPU_TIME", false},
@@ -60,7 +57,7 @@ if (boundary.param ~= nil) then
   source             = (type(boundary.param.source) == 'string' and boundary.param.source:gsub('%s+', '') ~= '' and boundary.param.source) or
    io.popen("uname -n"):read('*line')
   if core then
-    MBEANS_ENDPOINT = core .. "/" .. MBEANS_ENDPOINT
+    MBEANS_ENDPOINT = "/" .. core .. MBEANS_ENDPOINT
   end
 end
 
