@@ -47,20 +47,6 @@
             "required": true
         },
         {
-            "title": "SOLR Plugin Log File",
-            "name": "log_file",
-            "description": "The log file to capture logging information from the plugin",
-            "type": "string",
-            "required": false
-        },
-        {
-            "title": "SOLR Plugin Report Log File",
-            "name": "report_log_file",
-            "description": "The log file to capture reporting information from the plugin",
-            "type": "string",
-            "required": false
-        },
-        {
             "title": "SOLR Core to Monitor",
             "name": "core_name",
             "description": "The SOLR core collection which is to be monitored by the plugin.",
