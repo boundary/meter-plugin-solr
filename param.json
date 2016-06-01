@@ -1,5 +1,5 @@
 {
-    "stats_url" : "http://localhost:8983/solr/admin",
+    "base_url" : "http://localhost:8983/solr",
     "core_name": "collection1",
     "pollInterval" : 5000
 }
