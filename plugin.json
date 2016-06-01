@@ -7,7 +7,6 @@
     "icon" : "icon.png",
 
     "metrics" : [
-        "SOLR_RUN_MODE",
         "SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE",
         "SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE",
         "SOLR_SYSTEM_PROCESS_CPU_TIME",
