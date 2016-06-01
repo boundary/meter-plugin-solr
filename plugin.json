@@ -68,11 +68,11 @@
             "required": false
         },
         {
-            "title": "Solr Stats URL",
-            "name": "stats_url",
-            "description": "The URL to Solr's stats API endpoint",
+            "title": "Solr Base URL",
+            "name": "base_url",
+            "description": "The Base URL to Solr's stats API endpoint",
             "type": "string",
-            "default": "http://localhost:8983/solr/admin",
+            "default": "http://localhost:8983/solr",
             "required": true
         }
     ]
