@@ -51,9 +51,9 @@ MBEANS_KEY_MAPPING = {
 
 
 if (boundary.param ~= nil) then
-  pollInterval = boundary.param.pollInterval or pollInterval
-  url          = boundary.param.stats_url or url
-  core         = boundary.param.core_name or nil
+  pollInterval = boundary.param.interval or pollInterval
+  url          = boundary.param.base or url
+  core         = boundary.param.core or nil
   source             = (type(boundary.param.source) == 'string' and boundary.param.source:gsub('%s+', '') ~= '' and boundary.param.source) or
    io.popen("uname -n"):read('*line')
   if core then
