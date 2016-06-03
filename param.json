@@ -1,6 +1,6 @@
 {
-    "base_url" : "http://localhost:8983/solr",
-    "core_name": "collection1",
-    "pollInterval" : 5000
+    "base" : "http://localhost:8983/solr",
+    "core": "collection1",
+    "interval" : 5000
 }
 
