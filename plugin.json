@@ -32,7 +32,7 @@
     
     "paramArray": {
         "itemTitle": [
-            "host","port"
+            "host","port","core"
         ],
         "schemaTitle": "Instance"
     },
