@@ -1,6 +1,6 @@
 {
     "description": "Metric collector for SOLR",
-    "command": "boundary-meter init.lua",
+    "command": "python -u plugin.py",
     "postExtract" : "",
     "command_lua": "boundary-meter init.lua",
     "postExtract_lua" : "",
@@ -30,43 +30,39 @@
         "SOLR_CACHE_DOCUMENT_WARMUPTIME"
     ],
 
-    "dashboards" : [
-        {
-            "name" : "Solr",
-            "layout" : "d-w=4&d-h=4&d-pad=5&d-light=0&d-bg=none&d-g-SOLR_CACHE_DOCUMENT_HITS=0-0-1-1&d-g-SOLR_CACHE_DOCUMENT_EVICTIONS=1-0-1-1&d-g-SOLR_CACHE_DOCUMENT_INSERTS=2-0-1-1&d-g-SOLR_CACHE_DOCUMENT_LOOKUPS=3-0-1-1&d-g-SOLR_CACHE_DOCUMENT_SIZE=0-1-1-1&d-g-SOLR_JVM_MEMORY_FREE=1-1-1-1&d-g-SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE=1-2-1-1&d-g-SOLR_SYSTEM_PROCESS_CPU_TIME=0-2-1-1&d-g-SOLR_JVM_MEMORY_USED=2-1-1-1&d-g-SOLR_SYSTEM_MAX_FILE_DESCRIPTOR_COUNT=2-2-1-1&d-g-SOLR_SYSTEM_OPEN_FILE_DESCRIPTOR_COUNT=3-2-1-1&d-g-SOLR_JVM_MEMORY_TOTAL=3-1-1-1&d-g-SOLR_THREAD_PEAK=3-3-1-1&d-g-SOLR_THREAD_DAEMON=2-3-1-1&d-g-SOLR_THREAD_CURRENT=1-3-1-1&d-g-SOLR_JVM_MEMORY_MAX=0-3-1-1"
-        }
-    ],
-    
-    "paramArray": {
-        "itemTitle": [
-        "base","core", "interval"
-        ],
-        "schemaTitle": "Instance"
-    },
-    
     "paramSchema": [
-        {
-            "title": "Solr Base URL",
-            "name": "base",
-            "description": "The Base URL to Solr's stats API endpoint",
-            "type": "string",
-            "default": "http://localhost:8983/solr",
-            "required": true
-        },
-        {
-            "title": "SOLR Core to Monitor",
-            "name": "core",
-            "description": "The SOLR core collection which is to be monitored by the plugin.",
-            "type": "string",
-            "required": false
-        },
-        {
-            "title": "Poll Time (ms)",
-            "name": "interval",
-            "description": "The Poll Interval to call the command. Defaults 5 seconds",
-            "type": "integer",
-            "default": 5000,
-            "required": true
-        }
+
+    {
+      "title"       : "Host Name",
+      "name"        : "host",
+      "description" : "Host name where the Solr service is running",
+      "type"        : "string",
+      "default"     : "127.0.0.1",
+      "required"    : true
+    },
+    {
+      "title"       : "Port Number",
+      "name"        : "port",
+      "description" : "The port number where the service is runninb on the host machine",
+      "type"        : "number",
+      "default"     : 8983,
+      "required"    : true
+    },
+    {
+     "title"       : "Core Name",
+      "name"        : "core",
+      "description" : "Name of the core instance that need to be monitored.",
+      "type"        : "string",
+      "default"     : "",
+      "required"    : true
+    },
+    {
+     "title"        : "Poll Interval",
+      "name"        : "pollInterval",
+      "description" : "The Poll Interval in milliseconds. Ex. 5000",
+      "type"        : "number",
+      "default"     : 5000,
+      "required"    : false
+    }
     ]
 }
