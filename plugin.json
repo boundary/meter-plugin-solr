@@ -29,9 +29,15 @@
         "SOLR_CACHE_DOCUMENT_EVICTIONS",
         "SOLR_CACHE_DOCUMENT_WARMUPTIME"
     ],
+    
+    "paramArray": {
+        "itemTitle": [
+            "host","port"
+        ],
+        "schemaTitle": "Instance"
+    },
 
     "paramSchema": [
-
     {
       "title"       : "Host Name",
       "name"        : "host",
