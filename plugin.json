@@ -1,9 +1,9 @@
 {
     "description": "Metric collector for SOLR",
-    "command": "python -u plugin.py",
-    "postExtract" : "",
+    "command": "boundary-meter init.lua",
+    "postExtract" : "cp param.json /tmp/.",
     "command_lua": "boundary-meter init.lua",
-    "postExtract_lua" : "",
+    "postExtract_lua" : "cp param.json /tmp/.",
     "icon" : "icon.png",
 
     "metrics" : [
