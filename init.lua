@@ -74,7 +74,7 @@ local function createPollers(params)
 
 	for _, item in pairs(params.items) do
 		local tds = createThreadDataSource(item)
-		local threadPoller = DataSourcePoller:new(5000, tds)
+		local threadPoller = DataSourcePoller:new(item.pollInterval, tds)
 		pollers:add(threadPoller)
 
 		local sds = createSystemDataSource(item)
