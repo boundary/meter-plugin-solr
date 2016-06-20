@@ -114,9 +114,9 @@ local function threadDetailsExtractor (data, item)
         local metric = function (...) ipack(result, ...) end
 	
 	local source = item.host .. ":" .. item.port
-        metric('SOLR_THREAD_CURRENT', data.system.threadCount.current, nil, item.core)
-	metric('SOLR_THREAD_PEAK', data.system.threadCount.peak, nil, item.core)
-	metric('SOLR_THREAD_DAEMON', data.system.threadCount.daemon, nil, item.core)
+        metric('SOLR_THREAD_CURRENT', data.system.threadCount.current, nil, source)
+	metric('SOLR_THREAD_PEAK', data.system.threadCount.peak, nil, source)
+	metric('SOLR_THREAD_DAEMON', data.system.threadCount.daemon, nil, source)
 
         return result
 end
