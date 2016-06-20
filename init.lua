@@ -93,17 +93,18 @@ local function systemDetailsExtractor (data, item)
 	local result = {}
 	local metric = function (...) ipack(result, ...) end
 
-	metric('SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE', data.system.committedVirtualMemorySize, nil, item.core)
-	metric('SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE', data.system.freePhysicalMemorySize, nil, item.core)
-	metric('SOLR_SYSTEM_PROCESS_CPU_TIME', data.system.processCpuTime, nil, item.core)
-	metric('SOLR_SYSTEM_OPEN_FILE_DESCRIPTOR_COUNT', data.system.openFileDescriptorCount, nil, item.core)
-	metric('SOLR_SYSTEM_MAX_FILE_DESCRIPTOR_COUNT', data.system.maxFileDescriptorCount, nil, item.core)
-	metric('SOLR_JVM_UPTIME', data.jvm.jmx.upTimeMS, nil, item.core)
-	metric('SOLR_JVM_PROCESSORS', data.jvm.processors, nil, item.core)
-	metric('SOLR_JVM_MEMORY_FREE', data.jvm.memory.raw.free, nil, item.core)
-	metric('SOLR_JVM_MEMORY_TOTAL', data.jvm.memory.raw.total, nil, item.core)
-	metric('SOLR_JVM_MEMORY_MAX', data.jvm.memory.raw.max, nil, item.core)
-	metric('SOLR_JVM_MEMORY_USED', data.jvm.memory.raw.used, nil, item.core)
+	local source = item.host .. ":" .. item.port
+	metric('SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE', data.system.committedVirtualMemorySize, nil, source)
+	metric('SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE', data.system.freePhysicalMemorySize, nil, source)
+	metric('SOLR_SYSTEM_PROCESS_CPU_TIME', data.system.processCpuTime, nil, source)
+	metric('SOLR_SYSTEM_OPEN_FILE_DESCRIPTOR_COUNT', data.system.openFileDescriptorCount, nil, source)
+	metric('SOLR_SYSTEM_MAX_FILE_DESCRIPTOR_COUNT', data.system.maxFileDescriptorCount, nil, source)
+	metric('SOLR_JVM_UPTIME', data.jvm.jmx.upTimeMS, nil, source)
+	metric('SOLR_JVM_PROCESSORS', data.jvm.processors, nil, source)
+	metric('SOLR_JVM_MEMORY_FREE', data.jvm.memory.raw.free, nil, source)
+	metric('SOLR_JVM_MEMORY_TOTAL', data.jvm.memory.raw.total, nil, source)
+	metric('SOLR_JVM_MEMORY_MAX', data.jvm.memory.raw.max, nil, source)
+	metric('SOLR_JVM_MEMORY_USED', data.jvm.memory.raw.used, nil, source)
 
 	return result
 end
@@ -111,7 +112,8 @@ end
 local function threadDetailsExtractor (data, item)
         local result = {}
         local metric = function (...) ipack(result, ...) end
-
+	
+	local source = item.host .. ":" .. item.port
         metric('SOLR_THREAD_CURRENT', data.system.threadCount.current, nil, item.core)
 	metric('SOLR_THREAD_PEAK', data.system.threadCount.peak, nil, item.core)
 	metric('SOLR_THREAD_DAEMON', data.system.threadCount.daemon, nil, item.core)
@@ -126,13 +128,14 @@ local function mbeanDetailsExtractor (data, item)
 	--Direct reference like data.solr-mbeans.CACHE... fails due to '-' in the string.
 	local solrMbeans = data['solr-mbeans']
 
-        metric('SOLR_CACHE_DOCUMENT_LOOKUPS', solrMbeans.CACHE.documentCache.stats.lookups, nil, item.core)
-	metric('SOLR_CACHE_DOCUMENT_HITS', solrMbeans.CACHE.documentCache.stats.hits, nil, item.core)
-	metric('SOLR_CACHE_DOCUMENT_HITRATIO', solrMbeans.CACHE.documentCache.stats.hitratio, nil, item.core)
-	metric('SOLR_CACHE_DOCUMENT_INSERTS', solrMbeans.CACHE.documentCache.stats.inserts, nil, item.core)
-	metric('SOLR_CACHE_DOCUMENT_SIZE', solrMbeans.CACHE.documentCache.stats.size, nil, item.core)
-	metric('SOLR_CACHE_DOCUMENT_EVICTIONS', solrMbeans.CACHE.documentCache.stats.evictions, nil, item.core)
-	metric('SOLR_CACHE_DOCUMENT_WARMUPTIME',  solrMbeans.CACHE.documentCache.stats.warmupTime, nil, item.core)
+	local source = item.host .. ":" .. item.port .. "-" .. item.core
+        metric('SOLR_CACHE_DOCUMENT_LOOKUPS', solrMbeans.CACHE.documentCache.stats.lookups, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_HITS', solrMbeans.CACHE.documentCache.stats.hits, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_HITRATIO', solrMbeans.CACHE.documentCache.stats.hitratio, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_INSERTS', solrMbeans.CACHE.documentCache.stats.inserts, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_SIZE', solrMbeans.CACHE.documentCache.stats.size, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_EVICTIONS', solrMbeans.CACHE.documentCache.stats.evictions, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_WARMUPTIME',  solrMbeans.CACHE.documentCache.stats.warmupTime, nil, source)
 
         return result
 end
