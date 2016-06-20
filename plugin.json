@@ -29,7 +29,12 @@
         "SOLR_CACHE_DOCUMENT_EVICTIONS",
         "SOLR_CACHE_DOCUMENT_WARMUPTIME"
     ],
-    
+    "dashboards": [
+    	{
+	    "name": "Solr-General",
+	    "layout" : "d-w=3&d-h=4&d-pad=5&d-light=1&d-bg=none&d-g-SOLR_CACHE_DOCUMENT_INSERTS=0-0-1-1&d-g-SOLR_CACHE_DOCUMENT_HITS=2-0-1-1&d-g-SOLR_CACHE_DOCUMENT_LOOKUPS=1-0-1-1&d-g-SOLR_JVM_MEMORY_TOTAL=0-1-1-1&d-g-SOLR_JVM_MEMORY_USED=1-1-1-1&d-g-SOLR_JVM_MEMORY_MAX=2-1-1-1&d-g-SOLR_SYSTEM_MAX_FILE_DESCRIPTOR_COUNT=0-2-1-1&d-g-SOLR_SYSTEM_OPEN_FILE_DESCRIPTOR_COUNT=1-2-1-1&d-g-SOLR_THREAD_DAEMON=0-3-1-1&d-g-SOLR_THREAD_PEAK=1-3-1-1&d-g-SOLR_THREAD_CURRENT=2-3-1-1&d-g-SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE=2-2-1-1"
+	    }
+    ],
     "paramArray": {
         "itemTitle": [
             "host","port","core"
