@@ -1,9 +1,9 @@
 {
     "description": "Metric collector for SOLR",
     "command": "boundary-meter init.lua",
-    "postExtract" : "cat /etc/boundary/plugins/solrnew3/param.json > /tmp/solrlog.txt",
+    "postExtract" : "",
     "command_lua": "boundary-meter init.lua",
-    "postExtract_lua" : "cat /etc/boundary/plugins/solrnew3/param.json > /tmp/solrlog.txt",
+    "postExtract_lua" : "",
     "icon" : "icon.png",
 
     "metrics" : [
