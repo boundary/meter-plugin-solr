@@ -1,11 +1,13 @@
 {
-    "description": "Metric collector for SOLR",
-    "command": "boundary-meter init.lua",
+    "name" : "TrueSight Pulse Solr",
+    "version" : "0.9.0",
+    "meterVersionRequired" : "4.5.0-778",
+    "unsupportedPlatforms" : [ ],
+    "tags" : "solr",
+    "description": "Collects performance metrics for Solr",
+    "command": "truesight-luvit init.lua",
     "postExtract" : "",
-    "command_lua": "boundary-meter init.lua",
-    "postExtract_lua" : "",
     "icon" : "icon.png",
-
     "metrics" : [
         "SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE",
         "SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE",
@@ -61,9 +63,12 @@
     },
     {
      "title"       : "Core Name",
-      "name"        : "core",
-      "description" : "Name of the core instance that need to be monitored.",
-      "type"        : "string",
+      "name"        : "cores",
+      "description" : "Name of the core instances that need to be monitored.",
+      "type"        : "array",
+      "items"       : {
+         "type"	    : "string"
+      },
       "default"     : "",
       "required"    : true
     },
