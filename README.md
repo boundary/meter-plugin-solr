@@ -1,5 +1,5 @@
-# Boundary SOLR Plugin
-Collects metrics from SOLR server.
+# TrueSightPulse Solr Plugin
+Collects metrics from SOLR using Rest-API from Solr Admin server.
 
 ## Prerequisites
 
@@ -9,20 +9,12 @@ Collects metrics from SOLR server.
 |:----------|:-----:|:-------:|:-------:|:----:|
 | Supported |   v   |         |         |      |
 
-#### SOLR 4+
+#### Supported Solr Version - Apache Solr 4.5 or later.
 
-#### Boundary Meter Versions V4.0 or later
+#### Boundary Meter Versions V4.5.0-778 or later
 
 - To install new meter go to Settings->Installation or [see instructons|https://help.boundary.com/hc/en-us/sections/200634331-Installation]. 
 - To upgrade the meter to the latest version - [see instructons|https://help.boundary.com/hc/en-us/articles/201573102-Upgrading-the-Boundary-Meter].
-
-#### For Boundary Meter less than V4.0
-
-|  Runtime | node.js | Python | Java |
-|:---------|:-------:|:------:|:----:|
-| Required |         |    v   |      |
-
-- Python 2.6 or later
 
 ### Plugin Setup
 
@@ -36,8 +28,9 @@ In order for the plugin to collect statistics from SOLR server, it needs access 
 
 |Field Name     |Description                                         |
 |:--------------|:---------------------------------------------------|
-|base_url       |SOLR base URL - default: http://localhost:8983/solr/|
-|core_name      |SOLR Collection -               default: collection1|
+|host		|SOLR hostname default:localhost		     |
+|port           |SOLR Admin port number  default: 8983		     |
+|cores		|Solr core(s) that need to be monitored		     |
 |pollInterval   |How often to query the SOLR service for metrics     |
 
 ### Metrics Collected
