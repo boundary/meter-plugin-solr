@@ -87,14 +87,6 @@
     "displayNameShort": "SR JVM in Use",
     "unit": "bytecount"
   },
-  "SOLR_JVM_PROCESSORS": {
-    "defaultAggregate": "avg",
-    "defaultResolutionMS": 1000,
-    "description": "Number of processors used by SOLR.",
-    "displayName": "Processors used by SOLR",
-    "displayNameShort": "SR Proc Used",
-    "unit": "number"
-  },
   "SOLR_JVM_UPTIME": {
     "defaultAggregate": "avg",
     "defaultResolutionMS": 1000,
