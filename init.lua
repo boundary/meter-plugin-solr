@@ -22,53 +22,49 @@ local PollerCollection = framework.PollerCollection
 local isHttpSuccess = framework.util.isHttpSuccess
 local ipack = framework.util.ipack
 local parseJson = framework.util.parseJson
+local notEmpty = framework.string.notEmpty
 
 --Getting the parameters from params.json.
 local params = framework.params
 
+--These constants will be used to differentiate between callbacks.
 local SYSTEM_KEY = 'system_details_key'
 local THREAD_KEY = 'thread_details_key'
 local MBEAN_KEY = 'mbean_details_key'
 
+--Create the base options object.
 local function createOptions(item)
-
 	local options = {}
 	options.host = item.host
 	options.port = item.port
-	options.wait_for_end = false
-
+	options.wait_for_end = true
 	return options
 end
 
 local function createSystemDataSource(item)
-
         local options = createOptions(item)
-
 	options.path = "/solr/admin/info/system?wt=json"
 	options.meta = {SYSTEM_KEY, item}
-
         return WebRequestDataSource:new(options)
 end
 
 local function createThreadDataSource(item)
-
 	local options = createOptions(item)
-
 	options.path = "/solr/admin/info/threads?wt=json"
 	options.meta = {THREAD_KEY, item}
-
 	return WebRequestDataSource:new(options)
 end
 
-local function createMbeanDataSource(item)
+local function createMbeanDataSource(item, coreName)
 	local options = createOptions(item)
-
-        options.path = ("/solr/%s/admin/mbeans?stats=true&wt=json&json.nl=map"):format(item.core)
+        options.path = ("/solr/%s/admin/mbeans?stats=true&wt=json&json.nl=map"):format(coreName)
+	item.coreName = coreName
 	options.meta = {MBEAN_KEY, item}
-
         return WebRequestDataSource:new(options)
 end
 
+--Function creates all the pollers required for the plugin.
+--Multiple MbeanDataSources will be created for each of the cores specified.
 local function createPollers(params)
 	local pollers = PollerCollection:new()
 
@@ -81,9 +77,13 @@ local function createPollers(params)
 		local systemPoller = DataSourcePoller:new(item.pollInterval, sds)
 		pollers:add(systemPoller)
 
-		local mds = createMbeanDataSource(item)
-		local mbeanPoller = DataSourcePoller:new(item.pollInterval, mds)
-	        pollers:add(mbeanPoller)
+		for i, v in ipairs(item.cores) do
+			if notEmpty(v) then
+				local mds = createMbeanDataSource(item, v)
+				local mbeanPoller = DataSourcePoller:new(item.pollInterval, mds)
+				pollers:add(mbeanPoller)
+			end
+		end
 	end
 
 	return pollers
@@ -128,7 +128,7 @@ local function mbeanDetailsExtractor (data, item)
 	--Direct reference like data.solr-mbeans.CACHE... fails due to '-' in the string.
 	local solrMbeans = data['solr-mbeans']
 
-	local source = item.host .. ":" .. item.port .. "-" .. item.core
+	local source = item.host .. ":" .. item.port .. "-" .. item.coreName
         metric('SOLR_CACHE_DOCUMENT_LOOKUPS', solrMbeans.CACHE.documentCache.stats.lookups, nil, source)
 	metric('SOLR_CACHE_DOCUMENT_HITS', solrMbeans.CACHE.documentCache.stats.hits, nil, source)
 	metric('SOLR_CACHE_DOCUMENT_HITRATIO', solrMbeans.CACHE.documentCache.stats.hitratio, nil, source)
@@ -145,12 +145,14 @@ extractors_map[SYSTEM_KEY] = systemDetailsExtractor
 extractors_map[THREAD_KEY] = threadDetailsExtractor
 extractors_map[MBEAN_KEY] = mbeanDetailsExtractor
 
-
 local pollers = createPollers(params)
+
+--Plugin is created with the created pollers. Each of the poller will reponse with the callback funtion plugin:onParseValues()
 local plugin = Plugin:new(params, pollers)
 
---Response returned for each of the pollers.
+--Callback for each of the pollers.
 function plugin:onParseValues(data, extra)
+
 	local success, parsed = parseJson(data)
 
 	if not isHttpSuccess(extra.status_code) then
@@ -164,8 +166,11 @@ function plugin:onParseValues(data, extra)
 		return
 	end
 
+	--extractor_map is used to identify the extractor for the corresponding callback.
 	local key, item = unpack(extra.info)
 	local extractor = extractors_map[key]
+
+	--Calling the extractor function.
 	return extractor(parsed, item)
 
 end
