@@ -23,6 +23,7 @@ local isHttpSuccess = framework.util.isHttpSuccess
 local ipack = framework.util.ipack
 local parseJson = framework.util.parseJson
 local notEmpty = framework.string.notEmpty
+local clone = framework.table.clone
 
 --Getting the parameters from params.json.
 local params = framework.params
@@ -79,8 +80,10 @@ local function createPollers(params)
 
 		for i, v in ipairs(item.cores) do
 			if notEmpty(v) then
-				local mds = createMbeanDataSource(item, v)
-				local mbeanPoller = DataSourcePoller:new(item.pollInterval, mds)
+				--item table will be cloned to avoid getting overwritten in multicore scenarios.
+				local myitem = clone(item)
+				local mds = createMbeanDataSource(myitem, v)
+				local mbeanPoller = DataSourcePoller:new(myitem.pollInterval, mds)
 				pollers:add(mbeanPoller)
 			end
 		end
