@@ -96,7 +96,7 @@ local function systemDetailsExtractor (data, item)
 	local result = {}
 	local metric = function (...) ipack(result, ...) end
 
-	local source = item.host .. ":" .. item.port
+	local source = item.host .. "-" .. item.port
 	metric('SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE', data.system.committedVirtualMemorySize, nil, source)
 	metric('SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE', data.system.freePhysicalMemorySize, nil, source)
 	metric('SOLR_SYSTEM_PROCESS_CPU_TIME', data.system.processCpuTime, nil, source)
@@ -115,7 +115,7 @@ local function threadDetailsExtractor (data, item)
         local result = {}
         local metric = function (...) ipack(result, ...) end
 	
-	local source = item.host .. ":" .. item.port
+	local source = item.host .. "-" .. item.port
         metric('SOLR_THREAD_CURRENT', data.system.threadCount.current, nil, source)
 	metric('SOLR_THREAD_PEAK', data.system.threadCount.peak, nil, source)
 	metric('SOLR_THREAD_DAEMON', data.system.threadCount.daemon, nil, source)
@@ -130,7 +130,7 @@ local function mbeanDetailsExtractor (data, item)
 	--Direct reference like data.solr-mbeans.CACHE... fails due to '-' in the string.
 	local solrMbeans = data['solr-mbeans']
 
-	local source = item.host .. ":" .. item.port .. "-" .. item.coreName
+	local source = item.host .. "-" .. item.port .. "-" .. item.coreName
         metric('SOLR_CACHE_DOCUMENT_LOOKUPS', solrMbeans.CACHE.documentCache.stats.lookups, nil, source)
 	metric('SOLR_CACHE_DOCUMENT_HITS', solrMbeans.CACHE.documentCache.stats.hits, nil, source)
 	metric('SOLR_CACHE_DOCUMENT_HITRATIO', solrMbeans.CACHE.documentCache.stats.hitratio, nil, source)
