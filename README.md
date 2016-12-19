@@ -7,7 +7,7 @@ Collects metrics from SOLR using Rest-API from Solr Admin server.
 
 |     OS    | Linux | Windows | SmartOS | OS X |
 |:----------|:-----:|:-------:|:-------:|:----:|
-| Supported |   v   |         |         |      |
+| Supported |   v   |    -    |    -    |  -   |
 
 This plugin is compatible with Apache Solr 4.5 or later.
 
