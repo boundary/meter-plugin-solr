@@ -1,4 +1,6 @@
-# TrueSightPulse Solr Plugin
+TrueSight Pulse Solr Meter Plugin
+===================================
+
 Collects metrics from SOLR using Rest-API from Solr Admin server.
 
 ### Prerequisites
