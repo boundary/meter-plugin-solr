@@ -1,5 +1,13 @@
 {
-    "stats_url" : "http://localhost:8983/solr/admin",
-    "core_name": "collection1",
-    "pollInterval" : 5000
+  "items":[
+    {
+      "host":"localhost",
+      "port":8983,
+      "cores":[
+        "core1"
+      ],
+      "pollInterval":5000
+    }
+  ],
+  "pollInterval":5000
 }

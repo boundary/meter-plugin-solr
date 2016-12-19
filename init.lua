@@ -1,154 +1,182 @@
-local JSON     = require('json')
-local timer    = require('timer')
-local http     = require('http')
-local https    = require('https')
-local boundary = require('boundary')
-local io       = require('io')
-local _url     = require('_url')
-local base64   = require('luvit-base64')
+-- Copyright 2015 BMC Software, Inc.
+-- --
+-- -- Licensed under the Apache License, Version 2.0 (the "License");
+-- -- you may not use this file except in compliance with the License.
+-- -- You may obtain a copy of the License at
+-- --
+-- --    http://www.apache.org/licenses/LICENSE-2.0
+-- --
+-- -- Unless required by applicable law or agreed to in writing, software
+-- -- distributed under the License is distributed on an "AS IS" BASIS,
+-- -- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- -- See the License for the specific language governing permissions and
+-- -- limitations under the License.
 
+--Framework imports.
+local framework = require('framework')
 
-local __pgk        = "BOUNDARY SOLR"
-local _previous    = {}
-local url          = "http://localhost:8983/solr/"
-local core         = nil
-local pollInterval = 1000
+local Plugin = framework.Plugin
+local WebRequestDataSource = framework.WebRequestDataSource
+local DataSourcePoller = framework.DataSourcePoller
+local PollerCollection = framework.PollerCollection
+local isHttpSuccess = framework.util.isHttpSuccess
+local ipack = framework.util.ipack
+local parseJson = framework.util.parseJson
+local notEmpty = framework.string.notEmpty
+local clone = framework.table.clone
 
+--Getting the parameters from params.json.
+local params = framework.params
 
-SYSTEM_ENDPOINT = 'admin/info/system?wt=json'
-THREAD_ENDPOINT = 'admin/info/threads?wt=json'
-MBEANS_ENDPOINT = 'admin/mbeans?stats=true&wt=json&json.nl=map'
+--These constants will be used to differentiate between callbacks.
+local SYSTEM_KEY = 'system_details_key'
+local THREAD_KEY = 'thread_details_key'
+local MBEAN_KEY = 'mbean_details_key'
 
-
-SYSTEM_KEY_MAPPING = {
-    {{"mode"}, "SOLR_RUN_MODE", false},
-    {{"system", "committedVirtualMemorySize"}, "SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE", false},
-    {{"system", "freePhysicalMemorySize"}, "SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE", false},
-    {{"system", "processCpuTime"}, "SOLR_SYSTEM_PROCESS_CPU_TIME", false},
-    {{"system", "openFileDescriptorCount"}, "SOLR_SYSTEM_OPEN_FILE_DESCRIPTOR_COUNT", false},
-    {{"system", "maxFileDescriptorCount"}, "SOLR_SYSTEM_MAX_FILE_DESCRIPTOR_COUNT", false},
-    {{"jvm", "jmx", "upTimeMS"}, "SOLR_JVM_UPTIME", false},
-    {{"jvm", "processors"}, "SOLR_JVM_PROCESSORS", false},
-    {{"jvm", "memory", "raw", "free"}, "SOLR_JVM_MEMORY_FREE", false},
-    {{"jvm", "memory", "raw", "total"}, "SOLR_JVM_MEMORY_TOTAL", false},
-    {{"jvm", "memory", "raw", "max"}, "SOLR_JVM_MEMORY_MAX", false},
-    {{"jvm", "memory", "raw", "used"}, "SOLR_JVM_MEMORY_USED", false}
-}
-
-
-THREAD_KEY_MAPPING = {
-    {{"system", "threadCount", "current"}, "SOLR_THREAD_CURRENT", false},
-    {{"system", "threadCount", "peak"}, "SOLR_THREAD_PEAK", false},
-    {{"system", "threadCount", "daemon"}, "SOLR_THREAD_DAEMON", false}
-}
-
-MBEANS_KEY_MAPPING = {
-    {{"solr-mbeans", "CACHE", "documentCache", "stats", "lookups"}, "SOLR_CACHE_DOCUMENT_LOOKUPS", false},
-    {{"solr-mbeans", "CACHE", "documentCache", "stats", "hits"}, "SOLR_CACHE_DOCUMENT_HITS", false},
-    {{"solr-mbeans", "CACHE", "documentCache", "stats", "hitratio"}, "SOLR_CACHE_DOCUMENT_HITRATIO", false},
-    {{"solr-mbeans", "CACHE", "documentCache", "stats", "inserts"}, "SOLR_CACHE_DOCUMENT_INSERTS", false},
-    {{"solr-mbeans", "CACHE", "documentCache", "stats", "size"}, "SOLR_CACHE_DOCUMENT_SIZE", false},
-    {{"solr-mbeans", "CACHE", "documentCache", "stats", "evictions"}, "SOLR_CACHE_DOCUMENT_EVICTIONS", false},
-    {{"solr-mbeans", "CACHE", "documentCache", "stats", "warmupTime"}, "SOLR_CACHE_DOCUMENT_WARMUPTIME", false},
-}
-
-
-if (boundary.param ~= nil) then
-  pollInterval = boundary.param.pollInterval or pollInterval
-  url          = boundary.param.stats_url or url
-  core         = boundary.param.core_name or nil
-  source             = (type(boundary.param.source) == 'string' and boundary.param.source:gsub('%s+', '') ~= '' and boundary.param.source) or
-   io.popen("uname -n"):read('*line')
-  if core then
-    MBEANS_ENDPOINT = core .. "/" .. MBEANS_ENDPOINT
-  end
+--Create the base options object.
+local function createOptions(item)
+	local options = {}
+	options.host = item.host
+	options.port = item.port
+	options.wait_for_end = true
+	return options
 end
 
-
-function berror(err)
-  if err then print(string.format("%s ERROR: %s", __pgk, tostring(err))) return err end
+local function createSystemDataSource(item)
+        local options = createOptions(item)
+	options.path = "/solr/admin/info/system?wt=json"
+	options.meta = {SYSTEM_KEY, item}
+        return WebRequestDataSource:new(options)
 end
 
---- do a http(s) request
-local doreq = function(url, cb)
-    local u         = _url.parse(url)
-    u.protocol      = u.scheme
-
-    for key, val in pairs(u.query) do
-      u.path = u.path .. (u.path:find("?") and "&" or "?").. key .. "=" .. val
-    end
-
-    local output    = ""
-    local onSuccess = function(res)
-      res:on("error", function(err)
-        cb("Error while receiving a response: " .. tostring(err), nil)
-      end)
-      res:on("data", function (chunk)
-        output = output .. chunk
-        if chunk:find("\n") then res:emit("end") end
-      end)
-      res:on("end", function()
-        res:destroy()
-        cb(nil, output)
-      end)
-    end
-    local req = (u.scheme == "https") and https.request(u, onSuccess) or http.request(u, onSuccess)
-    req:on("error", function(err)
-      cb("Error while sending a request: " .. tostring(err), nil)
-    end)
-    req:done()
+local function createThreadDataSource(item)
+	local options = createOptions(item)
+	options.path = "/solr/admin/info/threads?wt=json"
+	options.meta = {THREAD_KEY, item}
+	return WebRequestDataSource:new(options)
 end
 
-
-function diff(a, b)
-    if a == nil or b == nil then return 0 end
-    return math.max(a - b, 0)
+local function createMbeanDataSource(item, coreName)
+	local options = createOptions(item)
+        options.path = ("/solr/%s/admin/mbeans?stats=true&wt=json&json.nl=map"):format(coreName)
+	item.coreName = coreName
+	options.meta = {MBEAN_KEY, item}
+        return WebRequestDataSource:new(options)
 end
 
+--Function creates all the pollers required for the plugin.
+--Multiple MbeanDataSources will be created for each of the cores specified.
+local function createPollers(params)
+	local pollers = PollerCollection:new()
 
--- accumulate a value and return the difference from the previous value
-function accumulate(key, newValue)
-    local oldValue   = _previous[key] or newValue
-    local difference = diff(newValue, oldValue)
-    _previous[key]   = newValue
-    return difference
+	for _, item in pairs(params.items) do
+		local tds = createThreadDataSource(item)
+		local threadPoller = DataSourcePoller:new(item.pollInterval, tds)
+		pollers:add(threadPoller)
+
+		local sds = createSystemDataSource(item)
+		local systemPoller = DataSourcePoller:new(item.pollInterval, sds)
+		pollers:add(systemPoller)
+
+		for i, v in ipairs(item.cores) do
+			if notEmpty(v) then
+				--item table will be cloned to avoid getting overwritten in multicore scenarios.
+				local myitem = clone(item)
+				local mds = createMbeanDataSource(myitem, v)
+				local mbeanPoller = DataSourcePoller:new(myitem.pollInterval, mds)
+				pollers:add(mbeanPoller)
+			end
+		end
+	end
+
+	return pollers
 end
 
--- get the natural difference between a and b
-function diff(a, b)
-  if not a or not b then return 0 end
-  return math.max(a - b, 0)
+local function systemDetailsExtractor (data, item)
+	local result = {}
+	local metric = function (...) ipack(result, ...) end
+
+	local source = item.host .. "-" .. item.port
+	metric('SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE', data.system.committedVirtualMemorySize, nil, source)
+	metric('SOLR_SYSTEM_FREE_PHYSICAL_MEMORY_SIZE', data.system.freePhysicalMemorySize, nil, source)
+	metric('SOLR_SYSTEM_PROCESS_CPU_TIME', data.system.processCpuTime, nil, source)
+	metric('SOLR_SYSTEM_OPEN_FILE_DESCRIPTOR_COUNT', data.system.openFileDescriptorCount, nil, source)
+	metric('SOLR_SYSTEM_MAX_FILE_DESCRIPTOR_COUNT', data.system.maxFileDescriptorCount, nil, source)
+	metric('SOLR_JVM_UPTIME', data.jvm.jmx.upTimeMS, nil, source)
+	metric('SOLR_JVM_MEMORY_FREE', data.jvm.memory.raw.free, nil, source)
+	metric('SOLR_JVM_MEMORY_TOTAL', data.jvm.memory.raw.total, nil, source)
+	metric('SOLR_JVM_MEMORY_MAX', data.jvm.memory.raw.max, nil, source)
+	metric('SOLR_JVM_MEMORY_USED', data.jvm.memory.raw.used, nil, source)
+
+	return result
 end
 
+local function threadDetailsExtractor (data, item)
+        local result = {}
+        local metric = function (...) ipack(result, ...) end
+	
+	local source = item.host .. "-" .. item.port
+        metric('SOLR_THREAD_CURRENT', data.system.threadCount.current, nil, source)
+	metric('SOLR_THREAD_PEAK', data.system.threadCount.peak, nil, source)
+	metric('SOLR_THREAD_DAEMON', data.system.threadCount.daemon, nil, source)
 
-function getData(endpoint, mapping)
-  local u = url .. endpoint
-  doreq(u, function(err, body)
-    if berror(err) then return end
-    local data = JSON.parse(body)
-    for _, val in pairs(mapping) do
-      local path  = val[1]
-      local name  = val[2]
-      local acc   = val[3]
-      local value = data
-      for i = 1, #path do
-        value = value[path[i]]
-      end
-      if acc then
-        value = accumulate(name, value)
-      end
-      print(string.format('%s %s %s', name, value, source))
-    end
-  end)
+        return result
 end
 
-print("_bevent:SOLR plugin up : version 1.0|t:info|tags:solr,lua, plugin")
+local function mbeanDetailsExtractor (data, item)
+        local result = {}
+        local metric = function (...) ipack(result, ...) end
 
-timer.setInterval(pollInterval, function ()
-    -- get and print data
-    getData(SYSTEM_ENDPOINT, SYSTEM_KEY_MAPPING)
-    getData(THREAD_ENDPOINT, THREAD_KEY_MAPPING)
-    getData(MBEANS_ENDPOINT, MBEANS_KEY_MAPPING)
+	--Direct reference like data.solr-mbeans.CACHE... fails due to '-' in the string.
+	local solrMbeans = data['solr-mbeans']
 
-end)
+	local source = item.host .. "-" .. item.port .. "-" .. item.coreName
+        metric('SOLR_CACHE_DOCUMENT_LOOKUPS', solrMbeans.CACHE.documentCache.stats.lookups, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_HITS', solrMbeans.CACHE.documentCache.stats.hits, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_HITRATIO', solrMbeans.CACHE.documentCache.stats.hitratio, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_INSERTS', solrMbeans.CACHE.documentCache.stats.inserts, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_SIZE', solrMbeans.CACHE.documentCache.stats.size, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_EVICTIONS', solrMbeans.CACHE.documentCache.stats.evictions, nil, source)
+	metric('SOLR_CACHE_DOCUMENT_WARMUPTIME',  solrMbeans.CACHE.documentCache.stats.warmupTime, nil, source)
+
+        return result
+end
+
+local extractors_map = {}
+extractors_map[SYSTEM_KEY] = systemDetailsExtractor
+extractors_map[THREAD_KEY] = threadDetailsExtractor
+extractors_map[MBEAN_KEY] = mbeanDetailsExtractor
+
+local pollers = createPollers(params)
+
+--Plugin is created with the created pollers. Each of the poller will reponse with the callback funtion plugin:onParseValues()
+local plugin = Plugin:new(params, pollers)
+
+--Callback for each of the pollers.
+function plugin:onParseValues(data, extra)
+
+	local success, parsed = parseJson(data)
+
+	if not isHttpSuccess(extra.status_code) then
+		self:emitEvent('error', ('Http request returned status code %s instead of OK. Please verify configuration.'):format(extra.status_code))
+    		return
+	end
+
+	local success, parsed = parseJson(data)
+  	if not success then
+		self:emitEvent('error', 'Cannot parse metrics. Please verify configuration.') 
+		return
+	end
+
+	--extractor_map is used to identify the extractor for the corresponding callback.
+	local key, item = unpack(extra.info)
+	local extractor = extractors_map[key]
+
+	--Calling the extractor function.
+	return extractor(parsed, item)
+
+end
+
+plugin:run()
+
 

@@ -5,7 +5,7 @@
     "description": "Total amount of evictions in the document cache.",
     "displayName": "Document cache evictions",
     "displayNameShort": "SR DOC Cache Evic",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_CACHE_DOCUMENT_HITRATIO": {
     "defaultAggregate": "avg",
@@ -21,7 +21,7 @@
     "description": "Total amount of document cache hits (Number of requests where the doc. cache was used).",
     "displayName": "Amount of document cache hits",
     "displayNameShort": "SR DOC Cache Hit",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_CACHE_DOCUMENT_INSERTS": {
     "defaultAggregate": "avg",
@@ -29,7 +29,7 @@
     "description": "Total amount of inserts in the document cache.",
     "displayName": "Amount of inserts in cache",
     "displayNameShort": "SR DOC Cache IS",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_CACHE_DOCUMENT_LOOKUPS": {
     "defaultAggregate": "avg",
@@ -37,7 +37,7 @@
     "description": "Total amount of lookups in the document cache.",
     "displayName": "Amount of document cache lookups",
     "displayNameShort": "SR DOC Cache LU",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_CACHE_DOCUMENT_SIZE": {
     "defaultAggregate": "avg",
@@ -45,7 +45,7 @@
     "description": "The size of the document cache.",
     "displayName": "Document Cache Size",
     "displayNameShort": "SR DOC Cache Size",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_CACHE_DOCUMENT_WARMUPTIME": {
     "defaultAggregate": "avg",
@@ -53,7 +53,7 @@
     "description": "The time needed (seconds) to warm up the document cache.",
     "displayName": "Warmup time of the document cache",
     "displayNameShort": "SR DOC Cache WUP",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_JVM_MEMORY_FREE": {
     "defaultAggregate": "avg",
@@ -87,21 +87,13 @@
     "displayNameShort": "SR JVM in Use",
     "unit": "bytecount"
   },
-  "SOLR_JVM_PROCESSORS": {
-    "defaultAggregate": "avg",
-    "defaultResolutionMS": 1000,
-    "description": "Number of processors used by SOLR.",
-    "displayName": "Processors used by SOLR",
-    "displayNameShort": "SR Proc Used",
-    "unit": "int"
-  },
   "SOLR_JVM_UPTIME": {
     "defaultAggregate": "avg",
     "defaultResolutionMS": 1000,
     "description": "Uptime of JVM used to serve the SOLR service.",
     "displayName": "JVM uptime for SOLR",
     "displayNameShort": "SR JVM Uptime",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_SYSTEM_COMMITED_VIRTUAL_MEMORY_SIZE": {
     "defaultAggregate": "avg",
@@ -125,7 +117,7 @@
     "description": "Total amount of allowed file descriptors in the system.",
     "displayName": "System maximum file descriptor",
     "displayNameShort": "SR Sys Max FDesc",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_SYSTEM_OPEN_FILE_DESCRIPTOR_COUNT": {
     "defaultAggregate": "avg",
@@ -133,7 +125,7 @@
     "description": "Total amount of file descriptors open in the system.",
     "displayName": "System open file descriptor",
     "displayNameShort": "SR Sys Open FDesc",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_SYSTEM_PROCESS_CPU_TIME": {
     "defaultAggregate": "avg",
@@ -141,7 +133,7 @@
     "description": "CPU time on the system used by SOLR",
     "displayName": "System CPU time for for SOLR",
     "displayNameShort": "SR Sys CPU Time",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_THREAD_CURRENT": {
     "defaultAggregate": "avg",
@@ -149,7 +141,7 @@
     "description": "Number of threads running to serv requests arriving to SOLR.",
     "displayName": "Current number of threads running",
     "displayNameShort": "SR Thread Used",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_THREAD_DAEMON": {
     "defaultAggregate": "avg",
@@ -157,7 +149,7 @@
     "description": "The number of running threads used by the SOLR daemon.",
     "displayName": "Threads used by daemon",
     "displayNameShort": "SR Thread Daemon",
-    "unit": "int"
+    "unit": "number"
   },
   "SOLR_THREAD_PEAK": {
     "defaultAggregate": "avg",
@@ -165,6 +157,6 @@
     "description": "The maximum number of threads in running state since the last startup.",
     "displayName": "Maximum running threads since startup",
     "displayNameShort": "SR Thread Peak",
-    "unit": "int"
+    "unit": "number"
   }
 }
