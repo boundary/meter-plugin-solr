@@ -31,6 +31,7 @@ In order for the plugin to collect statistics from SOLR server, it needs access 
 |host		|SOLR hostname default:localhost		     |
 |port           |SOLR Admin port number  default: 8983		     |
 |cores		|Solr core(s) that need to be monitored		     |
+|sourceName |Source name which will be displayed as source identifier | 
 |pollInterval   |How often to query the SOLR service for metrics     |
 
 ### Metrics Collected
