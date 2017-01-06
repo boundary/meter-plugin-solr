@@ -76,6 +76,14 @@
       "required"    : true
     },
     {
+      "title"       : "Source Name",
+      "name"        : "sourceName",
+      "description" : "Source name which will be displayed as source identifier",
+      "type"        : "string",
+      "default"     : "",
+      "required"    : true
+   },
+    {
      "title"        : "Poll Interval",
       "name"        : "pollInterval",
       "description" : "The Poll Interval in milliseconds. Ex. 5000",
