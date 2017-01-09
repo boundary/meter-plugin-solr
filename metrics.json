@@ -131,7 +131,7 @@
     "defaultAggregate": "avg",
     "defaultResolutionMS": 1000,
     "description": "CPU time on the system used by SOLR",
-    "displayName": "System CPU time for for SOLR",
+    "displayName": "System CPU time for SOLR",
     "displayNameShort": "SR Sys CPU Time",
     "unit": "number"
   },
