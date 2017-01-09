@@ -6,6 +6,7 @@
       "cores":[
         "core1"
       ],
+      "sourceName":"",
       "pollInterval":5000
     }
   ],
