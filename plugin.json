@@ -1,6 +1,6 @@
 {
     "name" : "TrueSight Pulse Solr",
-    "version" : "0.9.0",
+    "version" : "0.9.1",
     "meterVersionRequired" : "4.5.0-778",
     "unsupportedPlatforms" : [ ],
     "tags" : "solr",
